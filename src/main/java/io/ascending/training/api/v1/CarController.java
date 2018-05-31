@@ -26,7 +26,7 @@ public class CarController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Car> getCarList() {
-        logger.debug("list all cars!");
+//        logger.debug("list all cars!");
         Iterable<Car> iterable = carService.findAll();
         List<Car> list = new ArrayList<>();
         for (Car car : iterable) {

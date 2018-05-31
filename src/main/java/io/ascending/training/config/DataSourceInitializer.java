@@ -4,12 +4,11 @@ package io.ascending.training.config;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.flywaydb.core.Flyway;
 import org.hibernate.jpa.HibernatePersistenceProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -26,7 +25,7 @@ import java.util.Properties;
 @PropertySource("classpath:META-INF/env/dev-db.properties")
 @EnableJpaRepositories(basePackages = "io.ascending.training.repository")
 public class DataSourceInitializer {
-
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private Environment environment;
 
@@ -74,8 +73,21 @@ public class DataSourceInitializer {
         return dataSource;
     }
 
-    @Bean(initMethod = "migrate")
-    public Flyway flyway() {
+    @Profile({"test","stage","prod"})
+    @Bean(name="flyway",initMethod="migrate")
+    public Flyway flywayDefault() {
+        logger.info("flyway profile default.");
+        Flyway flyway = new Flyway();
+        flyway.setBaselineOnMigrate(true);
+        flyway.setLocations("classpath:db/migration/");
+        flyway.setDataSource(getDataSource());
+        return flyway;
+    }
+
+    @Profile("dev")
+    @Bean(name="flyway",initMethod = "validate")
+    public Flyway flywayDev() {
+        logger.info("flyway profile dev.");
         Flyway flyway = new Flyway();
         flyway.setBaselineOnMigrate(true);
         flyway.setLocations("classpath:db/migration/");
