@@ -11,8 +11,8 @@
         <spring.version>5.0.6.RELEASE</spring.version>
         <fasterxml-jackson.version>2.9.5</fasterxml-jackson.version>
         <hibernate.version>5.3.1.Final</hibernate.version>
+        <org.slf4j-version>1.7.25</org.slf4j-version>
         <flyway.version>5.1.1</flyway.version>
-        <flyway.migration.target>1.1.0</flyway.migration.target>
     </properties>
 
     <dependencies>
@@ -141,6 +141,49 @@
             <version>42.1.1</version>
         </dependency>
 
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${org.slf4j-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${org.slf4j-version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${org.slf4j-version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.15</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.mail</groupId>
+                    <artifactId>mail</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.jms</groupId>
+                    <artifactId>jms</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.sun.jdmk</groupId>
+                    <artifactId>jmxtools</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.sun.jmx</groupId>
+                    <artifactId>jmxri</artifactId>
+                </exclusion>
+            </exclusions>
+            <scope>runtime</scope>
+        </dependency>
+
         <!-- flyway database migration -->
         <dependency>
             <groupId>org.flywaydb</groupId>
@@ -185,16 +228,15 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
+                <version>${flyway.version}</version>
                 <configuration>
                     <driver>org.postgresql.Driver</driver>
                     <url>jdbc:postgresql://localhost:5432/car</url>
                     <user>admin</user>
                     <password>password123</password>
-                    <baselineOnMigrate>true</baselineOnMigrate>
                     <locations>
                         <location>db/migration</location>
                     </locations>
-                    <target>${flyway.migration.target}</target>
                 </configuration>
             </plugin>
             <plugin>

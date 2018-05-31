@@ -1,4 +1,3 @@
-CREATE SEQUENCE cars_id_seq;
 create table cars (
     id bigint not null DEFAULT NEXTVAL('cars_id_seq'),
     brand varchar(255) not NULL,
