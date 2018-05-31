@@ -6,45 +6,42 @@ import org.flywaydb.core.Flyway;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
-import org.springframework.core.env.Environment;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource("classpath:META-INF/env/dev-db.properties")
 @EnableJpaRepositories(basePackages = "io.ascending.training.repository")
 public class DataSourceInitializer {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    @Autowired
-    private Environment environment;
+//    @Autowired
+//    private Environment environment;
 
-    @Value("#{ environment['database.serverName'] }")
+    @Value("#{ databaseProperties['database.serverName'] }")
     protected String databaseUrl;
 
-    @Value("#{ environment['database.username'] }")
+    @Value("#{ databaseProperties['database.username'] }")
     protected String databaseUserName = "";
 
-    @Value("#{ environment['database.password'] }")
+    @Value("#{ databaseProperties['database.password'] }")
     protected String databasePassword = "";
 
-    @Value("#{ environment['database.dataSourceClassName'] }")
+    @Value("#{ databaseProperties['database.dataSourceClassName'] }")
     protected String driverClassName;
 
 //    @Value("#{ environment['jdbc.validation.query'] }")
 //    protected String databaseValidationQuery;
-
-
 
     @Bean(name = "dataSource")
     public DataSource getDataSource(){
