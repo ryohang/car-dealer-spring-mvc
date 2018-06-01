@@ -6,17 +6,20 @@ import org.flywaydb.core.Flyway;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -25,8 +28,8 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = "io.ascending.training.repository")
 public class DataSourceInitializer {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-//    @Autowired
-//    private Environment environment;
+    @Autowired
+    private Environment environment;
 
     @Value("#{ databaseProperties['database.serverName'] }")
     protected String databaseUrl;
@@ -42,6 +45,14 @@ public class DataSourceInitializer {
 
 //    @Value("#{ environment['jdbc.validation.query'] }")
 //    protected String databaseValidationQuery;
+
+    @PostConstruct
+    public void init(){
+        String profile = environment.getActiveProfiles()[0];
+        logger.info("database initialization with profile: "+profile);
+    }
+
+
 
     @Bean(name = "dataSource")
     public DataSource getDataSource(){
@@ -73,23 +84,13 @@ public class DataSourceInitializer {
     @Profile({"test","stage","prod"})
     @Bean(name="flyway",initMethod="migrate")
     public Flyway flywayDefault() {
-        logger.info("flyway profile default.");
-        Flyway flyway = new Flyway();
-        flyway.setBaselineOnMigrate(true);
-        flyway.setLocations("classpath:db/migration/");
-        flyway.setDataSource(getDataSource());
-        return flyway;
+        return setupFlyway();
     }
 
-    @Profile("dev")
+    @Profile({"dev","unit"})
     @Bean(name="flyway",initMethod = "validate")
     public Flyway flywayDev() {
-        logger.info("flyway profile dev.");
-        Flyway flyway = new Flyway();
-        flyway.setBaselineOnMigrate(true);
-        flyway.setLocations("classpath:db/migration/");
-        flyway.setDataSource(getDataSource());
-        return flyway;
+        return setupFlyway();
     }
 
 
@@ -115,5 +116,13 @@ public class DataSourceInitializer {
         factoryBean.setJpaProperties(props);
 
         return factoryBean;
+    }
+
+    private Flyway setupFlyway(){
+        Flyway flyway = new Flyway();
+        flyway.setBaselineOnMigrate(true);
+        flyway.setLocations("classpath:db/migration/");
+        flyway.setDataSource(getDataSource());
+        return flyway;
     }
 }
