@@ -9,11 +9,13 @@
 
     <properties>
         <spring.version>5.0.6.RELEASE</spring.version>
+        <spring.security.version>5.0.5.RELEASE</spring.security.version>
         <fasterxml-jackson.version>2.9.5</fasterxml-jackson.version>
         <java-version>1.8</java-version>
         <hibernate.version>5.3.1.Final</hibernate.version>
         <org.slf4j-version>1.7.25</org.slf4j-version>
         <flyway.version>5.1.1</flyway.version>
+        <jackson.version>2.9.5</jackson.version>
     </properties>
 
     <dependencies>
@@ -52,6 +54,26 @@
             <artifactId>spring-orm</artifactId>
             <version>${spring.version}</version>
         </dependency>
+
+        <!-- Spring Security -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+
+        <!--json-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.9.5</version>
+        </dependency>
+
 
         <!--hibernate-->
         <dependency>
@@ -95,6 +117,13 @@
             <artifactId>spring-data-jpa</artifactId>
             <version>2.0.7.RELEASE</version>
         </dependency>
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
+        </dependency>
+
 
         <dependency>
             <groupId>commons-fileupload</groupId>
