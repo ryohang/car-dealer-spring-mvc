@@ -16,4 +16,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 public class ServiceTest extends TestBase {
     @Autowired
     protected CarService carService;
+    @Autowired
+    protected ImageService imageService;
 }

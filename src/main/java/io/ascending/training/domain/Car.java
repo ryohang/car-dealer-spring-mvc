@@ -2,6 +2,7 @@ package io.ascending.training.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.GenerationType.SEQUENCE;
@@ -22,7 +23,7 @@ public class Car implements Serializable {
     @Column(name = "model")
     private String model;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "car",cascade = CascadeType.ALL)
     private List<Image> images;
 
     public Car(){}
@@ -54,7 +55,7 @@ public class Car implements Serializable {
     }
 
     public List<Image> getImages() {
-        return images;
+        return images==null ? new ArrayList<>() : images;
     }
 
     public void setImages(List<Image> images) {

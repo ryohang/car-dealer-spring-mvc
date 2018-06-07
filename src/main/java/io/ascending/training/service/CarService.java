@@ -5,6 +5,9 @@ import io.ascending.training.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 /**
  * Created by ryo on 5/20/18.
@@ -18,8 +21,8 @@ public class CarService extends CrudService<Car,Long> {
         return carRepository;
     }
 
-    public Car findBy(Car c){
-        carRepository.findAllCarsEager();
+    @Transactional(readOnly = true)
+    public Optional<Car> findBy(Car c){
         return carRepository.findByIdWithImages(c.getId());
     }
 }
