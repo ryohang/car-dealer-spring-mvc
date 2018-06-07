@@ -17,4 +17,9 @@ public class CarService extends CrudService<Car,Long> {
     protected CrudRepository<Car, Long> getCrudRepository() {
         return carRepository;
     }
+
+    public Car findBy(Car c){
+        carRepository.findAllCarsEager();
+        return carRepository.findByIdWithImages(c.getId());
+    }
 }

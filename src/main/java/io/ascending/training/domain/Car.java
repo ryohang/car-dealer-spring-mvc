@@ -23,7 +23,7 @@ public class Car implements Serializable {
     private String model;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
-    private List<Image> imageList;
+    private List<Image> images;
 
     public Car(){}
 
@@ -53,11 +53,11 @@ public class Car implements Serializable {
         this.model = model;
     }
 
-    public List<Image> getImageList() {
-        return imageList;
+    public List<Image> getImages() {
+        return images;
     }
 
-    public void setImageList(List<Image> imageList) {
-        this.imageList = imageList;
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 }
