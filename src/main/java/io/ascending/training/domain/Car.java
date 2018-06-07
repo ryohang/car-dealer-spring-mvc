@@ -2,6 +2,7 @@ package io.ascending.training.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -20,6 +21,9 @@ public class Car implements Serializable {
     private String brand;
     @Column(name = "model")
     private String model;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
+    private List<Image> imageList;
 
     public Car(){}
 
@@ -47,5 +51,13 @@ public class Car implements Serializable {
 
     public void setModel(String model) {
         this.model = model;
+    }
+
+    public List<Image> getImageList() {
+        return imageList;
+    }
+
+    public void setImageList(List<Image> imageList) {
+        this.imageList = imageList;
     }
 }
