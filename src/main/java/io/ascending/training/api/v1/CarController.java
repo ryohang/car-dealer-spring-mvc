@@ -26,7 +26,6 @@ public class CarController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Car> getCarList() {
-//        logger.debug("list all cars!");
         Iterable<Car> iterable = carService.findAll();
         List<Car> list = new ArrayList<>();
         for (Car car : iterable) {
@@ -36,8 +35,8 @@ public class CarController {
     }
 
     @RequestMapping(value="/{Id}" , method= RequestMethod.GET)
-    public Optional<Car> getCarById(@PathVariable("Id") Long carId) {
-        return carService.findById(carId);
+    public Car getCarById(@PathVariable("Id") Long carId) {
+        return carService.findBy(new Car(carId)).get();
     }
 
 

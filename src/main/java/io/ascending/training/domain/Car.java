@@ -28,6 +28,10 @@ public class Car implements Serializable {
 
     public Car(){}
 
+    public Car(Long id){
+        this.id = id;
+    }
+
     public Car(String brand) {
         this.brand = brand;
     }
