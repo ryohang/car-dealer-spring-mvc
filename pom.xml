@@ -16,6 +16,7 @@
         <org.slf4j-version>1.7.25</org.slf4j-version>
         <flyway.version>5.1.1</flyway.version>
         <jackson.version>2.9.5</jackson.version>
+        <swagger.version>2.9.0</swagger.version>
     </properties>
 
     <dependencies>
@@ -236,6 +237,22 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>25.1-jre</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-bean-validators</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
         </dependency>
 
         <dependency>
