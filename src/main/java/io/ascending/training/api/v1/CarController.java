@@ -40,4 +40,12 @@ public class CarController {
     }
 
 
+    @RequestMapping(value="/{Id}" , method= RequestMethod.GET,params = {"carName"})
+    public Car getCarById(@PathVariable("Id") Long carId,@RequestParam(value = "carName") String carName,@RequestHeader("Accept-Encoding") String encoding) {
+        logger.debug("parameter name is: "+ carName);
+        logger.debug("encoding header is: "+ encoding);
+        return carService.findBy(new Car(carId)).get();
+    }
+
+
 }
