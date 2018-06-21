@@ -18,7 +18,7 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @ComponentScan("io.ascending.training.api")
-@Import(SwaggerConfig.class)
+@Import({SwaggerConfig.class})
 public class MvcConfig  implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

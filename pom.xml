@@ -9,7 +9,6 @@
 
     <properties>
         <spring.version>5.0.6.RELEASE</spring.version>
-        <spring.security.version>5.0.5.RELEASE</spring.security.version>
         <fasterxml-jackson.version>2.9.5</fasterxml-jackson.version>
         <java-version>1.8</java-version>
         <hibernate.version>5.3.1.Final</hibernate.version>
@@ -67,12 +66,17 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
-            <version>${spring.security.version}</version>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>${spring.security.version}</version>
+            <version>${spring.version}</version>
         </dependency>
 
         <!--json-->
