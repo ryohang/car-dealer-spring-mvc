@@ -4,17 +4,20 @@ package io.ascending.training.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Collection;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
 @Table(name="users")
-public class User implements Serializable {
+public class User implements Serializable,UserDetails {
 
     @Id
     @GeneratedValue(strategy=SEQUENCE, generator="users_id_seq")
@@ -84,6 +87,32 @@ public class User implements Serializable {
     public String getUsername() {
         return username;
     }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
 
     public void setUsername(String username) {
         this.username = username;
