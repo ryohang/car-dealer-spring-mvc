@@ -30,16 +30,16 @@ public class UserDetailsServiceImpl implements UserDetailsService, MessageSource
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String email) {
-            logger.debug(email+" is trying to log in from spring security");
+    public UserDetails loadUserByUsername(String emailorUsername) {
+            logger.debug(emailorUsername+" is trying to log in from spring security");
             User domainUser = null;
             try {
-                domainUser = userService.findByEmailOrUsername(email);
+                domainUser = userService.findByEmailOrUsername(emailorUsername);
             }catch (Exception repositoryProblem) {
                 logger.debug("catch AuthenticationServiceException from AuthenticationProvider");
             }
             if (domainUser == null) {
-                throw new BadCredentialsException(messageSource.getMessage("AbstractUserDetailsAuthenticationProvider.UsernameNotFound", new Object[] {email , "User {0} has no GrantedAuthority"}, Locale.US));
+                throw new BadCredentialsException(messageSource.getMessage("AbstractUserDetailsAuthenticationProvider.UsernameNotFound", new Object[] {emailorUsername , "User {0} has no GrantedAuthority"}, Locale.US));
             }
 //            domainUser.setAuthorities(Utils.getAuthorities(userService.findAuthorities(domainUser)));
             return  domainUser;

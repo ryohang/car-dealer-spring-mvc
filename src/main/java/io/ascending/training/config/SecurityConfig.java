@@ -16,17 +16,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 //@Configuration
 @EnableWebSecurity
-public class SecurityConfig  {
+public class SecurityConfig {
+//            @Autowired
+//            private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 //    step1
 //    @Autowired
 //    public void configureGlobal(AuthenticationManagerBuilder auth)
 //            throws Exception {
-//        auth.inMemoryAuthentication().withUser("user")
-//                .password("password").roles("USER");
+//        auth.inMemoryAuthentication().withUser("user1")
+//                .password("{noop}password").roles("REGISTERED_USER");
 //    }
 //
 //    protected void configure(HttpSecurity http) throws Exception {
-//        http
+//        http.csrf().disable()
 //                .authorizeRequests()
 //                .anyRequest().authenticated()
 //                .and()
@@ -40,9 +42,9 @@ public class SecurityConfig  {
 //    }
 //
 //    protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf().disable().authorizeRequests().antMatchers("/api/users/login","/api/users/signup").permitAll()
+//        http.csrf().disable().authorizeRequests().antMatchers("/api/users/login","/api/user/login","/api/users/signup").permitAll()
 //                .and()
-//                    .authorizeRequests().antMatchers("/api/**").hasAnyRole("ROLE_REGISTERED_USER","ROLE_ADMIN")
+//                    .authorizeRequests().antMatchers("/api/**").hasAnyRole("REGISTERED_USER","ADMIN")
 //                .and()
 //                    .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
 //    }
@@ -85,7 +87,7 @@ public class SecurityConfig  {
         @Override
         public void configure(WebSecurity web) throws Exception {
             web.ignoring()
-                    .antMatchers("/resources/**");
+                    .antMatchers("/resources/**","/swagger-ui.html","/webjars/**");
         }
     }
 

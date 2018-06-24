@@ -80,6 +80,9 @@ public class User implements Serializable,UserDetails {
     @Column
     private String timezone;
 
+    @Column(name ="account_non_expired")
+    private Boolean accountNonExpired;
+
     public Long getId() {
         return id;
     }
@@ -90,7 +93,7 @@ public class User implements Serializable,UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return accountNonExpired;
     }
 
     @Override
