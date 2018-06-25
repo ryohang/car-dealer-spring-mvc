@@ -72,7 +72,7 @@ public class SecurityConfig {
             //http://www.baeldung.com/securing-a-restful-web-service-with-spring-security
             http.csrf().disable().authorizeRequests().antMatchers("/api/users/login","/api/users/signup").permitAll()
                 .and()
-                    .authorizeRequests().antMatchers("/api/**").hasAnyRole("ROLE_REGISTERED_USER","ROLE_ADMIN")
+                    .authorizeRequests().antMatchers("/api/**").hasAnyRole("REGISTERED_USER","ADMIN")
                 .and()
                     .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and()
