@@ -80,8 +80,14 @@ public class User implements Serializable,UserDetails {
     @Column
     private String timezone;
 
-    @Column(name ="account_non_expired")
-    private Boolean accountNonExpired;
+    @JsonIgnore
+    private Boolean enabled = true;
+
+    @JsonIgnore
+    private Boolean locked = false;
+
+    @JsonIgnore
+    private Boolean expired = false;
 
     public Long getId() {
         return id;
@@ -93,12 +99,12 @@ public class User implements Serializable,UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return accountNonExpired;
+        return !expired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !locked;
     }
 
     @Override
@@ -108,7 +114,23 @@ public class User implements Serializable,UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
+    }
+
+    public void setAccountNonExpired(Boolean accountNonExpired) {
+        this.expired = accountNonExpired;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
+    }
+
+    public void setExpired(Boolean expired) {
+        this.expired = expired;
     }
 
     @Override

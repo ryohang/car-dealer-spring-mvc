@@ -14,40 +14,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-//@Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-//            @Autowired
-//            private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-//    step1
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth)
-//            throws Exception {
-//        auth.inMemoryAuthentication().withUser("user1")
-//                .password("{noop}password").roles("REGISTERED_USER");
-//    }
-//
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf().disable()
-//                .authorizeRequests()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin();
-//    }
-//    step2
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication().withUser("user")
-//                .password("password").roles("USER");
-//    }
-//
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf().disable().authorizeRequests().antMatchers("/api/users/login","/api/user/login","/api/users/signup").permitAll()
-//                .and()
-//                    .authorizeRequests().antMatchers("/api/**").hasAnyRole("REGISTERED_USER","ADMIN")
-//                .and()
-//                    .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
-//    }
     @Configuration
     @Order(1)
     public static class RestWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
