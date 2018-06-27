@@ -21,14 +21,13 @@ public class SecurityConfig {
     public static class RestWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
         @Autowired
         private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-        //curl -i -X POST -d username=user -d password=password -c ./cookies.txt http://localhost:8080/login
+        //curl -i -X POST -d username=ryohang1 -d password=password123 -c ./cookies.txt http://localhost:8080/login
+        //curl --cookie ./cookies.txt http://localhost:8080/api/cars
         @Autowired
         private UserDetailsService userDetailsService;
         @Autowired
         public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
             PasswordEncoder encoder = new BCryptPasswordEncoder();
-//            auth.inMemoryAuthentication().withUser("user")
-//                .password("{noop}password").roles("REGISTERED_USER");
             auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
         }
         @Override
@@ -40,11 +39,12 @@ public class SecurityConfig {
             //http://www.baeldung.com/securing-a-restful-web-service-with-spring-security
             http.csrf().disable().authorizeRequests().antMatchers("/api/users/login","/api/users/signup").permitAll()
                 .and()
+                    //.authorizeRequests().antMatchers("/api/**").authenticated()
                     .authorizeRequests().antMatchers("/api/**").hasAnyRole("REGISTERED_USER","ADMIN")
                 .and()
                     .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint)
-                .and()
-                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                     .formLogin();
         }

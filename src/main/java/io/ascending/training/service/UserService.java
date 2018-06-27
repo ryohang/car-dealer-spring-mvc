@@ -2,9 +2,12 @@ package io.ascending.training.service;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import io.ascending.training.domain.Authority;
 import io.ascending.training.domain.Car;
 import io.ascending.training.domain.User;
+import io.ascending.training.enumdef.AuthorityRole;
 import io.ascending.training.extend.exp.NotFoundException;
+import io.ascending.training.repository.AuthorityRepository;
 import io.ascending.training.repository.CarRepository;
 import io.ascending.training.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,8 @@ import java.util.UUID;
 public class UserService extends CrudService<User,Long> {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private AuthorityRepository authorityRepository;
     @Override
     protected CrudRepository<User, Long> getCrudRepository() {
         return userRepository;
@@ -41,6 +46,8 @@ public class UserService extends CrudService<User,Long> {
         newUser.setConfirmToken(code);
         newUser.setCreatedAt(Instant.now());
         newUser.setLastResetAt(Instant.now());
+        save(newUser);
+        addAuthority(newUser,AuthorityRole.ROLE_REGISTERED_USER);
         save(newUser);
         return newUser;
     }
@@ -63,5 +70,20 @@ public class UserService extends CrudService<User,Long> {
             throw new NotFoundException();
         }
         return user;
+    }
+
+    // --------------------------//
+    // authority servic block //
+    // --------------------------//
+    @Transactional
+    public Authority addAuthority(User user,String authorityString) {
+        Authority userAuthority = new Authority(user, authorityString);
+        return authorityRepository.save(userAuthority);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Authority> findAuthorities(User user) {
+        List<Authority> roles = authorityRepository.findAuthoritiesByUserId(user.getId());
+        return roles;
     }
 }

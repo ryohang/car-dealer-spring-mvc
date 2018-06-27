@@ -1,6 +1,7 @@
 package io.ascending.training.extend.security;
 
 import io.ascending.training.domain.User;
+import io.ascending.training.domain.Utils;
 import io.ascending.training.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService, MessageSource
             if (domainUser == null) {
                 throw new BadCredentialsException(messageSource.getMessage("AbstractUserDetailsAuthenticationProvider.UsernameNotFound", new Object[] {emailorUsername , "User {0} has no GrantedAuthority"}, Locale.US));
             }
-//            domainUser.setAuthorities(Utils.getAuthorities(userService.findAuthorities(domainUser)));
+            domainUser.setAuthorities(Utils.getAuthorities(userService.findAuthorities(domainUser)));
             return  domainUser;
     }
 

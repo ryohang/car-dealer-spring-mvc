@@ -89,6 +89,10 @@ public class User implements Serializable,UserDetails {
     @JsonIgnore
     private Boolean expired = false;
 
+    @Transient
+    @JsonIgnore
+    private Collection<? extends GrantedAuthority> authorities;
+
     public Long getId() {
         return id;
     }
@@ -135,9 +139,12 @@ public class User implements Serializable,UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
     }
 
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
 
     public void setUsername(String username) {
         this.username = username;
