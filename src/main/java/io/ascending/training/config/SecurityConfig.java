@@ -48,7 +48,6 @@ public class SecurityConfig {
             return super.authenticationManagerBean();
         }
 
-
         @Override
         public void configure(WebSecurity web) throws Exception {
             web.ignoring()
@@ -57,17 +56,17 @@ public class SecurityConfig {
         protected void configure(HttpSecurity http) throws Exception {
             //http://www.baeldung.com/securing-a-restful-web-service-with-spring-security
             http.addFilterAt(new AnonymousAuthenticationFilter("ascending_key") ,AnonymousAuthenticationFilter.class)
-                    .addFilterBefore(jwtAuthenticationFilter,UsernamePasswordAuthenticationFilter.class)
+                    .addFilterAt(jwtAuthenticationFilter,UsernamePasswordAuthenticationFilter.class)
                     .csrf().disable().authorizeRequests().antMatchers("/api/users/login","/api/users/signup").permitAll()
                 .and()
                     //.authorizeRequests().antMatchers("/api/**").authenticated()
                     .authorizeRequests().antMatchers("/api/**").hasAnyRole("REGISTERED_USER","ADMIN")
                 .and()
                     .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint)
-//                .and()
-//                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                    .formLogin();
+                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//                .and()
+//                    .formLogin();
         }
     }
 
