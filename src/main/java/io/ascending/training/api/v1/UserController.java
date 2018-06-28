@@ -3,12 +3,27 @@ package io.ascending.training.api.v1;
 
 import io.ascending.training.domain.User;
 import io.ascending.training.enumdef.UserConfirmStatus;
+import io.ascending.training.extend.exp.NotFoundException;
+import io.ascending.training.extend.security.JwtAuthenticationResponse;
+import io.ascending.training.extend.security.JwtTokenUtil;
+import io.ascending.training.extend.security.RestAuthenticationRequest;
 import io.ascending.training.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mobile.device.Device;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.BeanIds;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,20 +33,51 @@ import java.util.List;
 public class UserController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    @Value("#{shareProperties['jwt.header']}")
+    private String tokenHeader;
+
     @Autowired
     private UserService userService;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
+    @Qualifier(BeanIds.AUTHENTICATION_MANAGER)
+    private AuthenticationManager authenticationManager;
+
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public List getUserList() {
+    public List<User> getUserList() {
         logger.debug("list users");
         return userService.findAll();
     }
 
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String userLogin(@RequestParam("username") String username) {
-        logger.debug("request parameters: "+ username);
-        return username;
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public ResponseEntity<?> login(@RequestBody RestAuthenticationRequest authenticationRequest, Device device) {
+        try {
+            final Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            authenticationRequest.getUsername(),
+                            authenticationRequest.getPassword()
+                    )
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            try {
+                final UserDetails userDetails = userService.findByEmailOrUsername(authenticationRequest.getUsername());
+//                userService.timeStampLogin((User) userDetails);
+                final String token = jwtTokenUtil.generateToken(userDetails, device);
+                return ResponseEntity.ok(new JwtAuthenticationResponse(token));
+            } catch (NotFoundException e) {
+                logger.error("System can't find user by email or username",e);
+                return ResponseEntity.notFound().build();
+            }
+        }catch (AuthenticationException ex){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("authentication failure, please check your username and password");
+        }
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)

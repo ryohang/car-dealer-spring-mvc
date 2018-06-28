@@ -8,3 +8,4 @@ src/main/webapp/META-INF
 .idea
 *.iml
 rebel.xml
+./cookie.txt

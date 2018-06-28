@@ -96,6 +96,18 @@
             <version>${fasterxml-jackson.version}</version>
         </dependency>
 
+        <!-- io.jsonwebtoken/jjwt -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+
 
         <!--hibernate-->
         <dependency>
@@ -146,6 +158,12 @@
             <version>2.0.1.Final</version>
         </dependency>
 
+        <!-- spring mobile-->
+        <dependency>
+            <groupId>org.springframework.mobile</groupId>
+            <artifactId>spring-mobile-device</artifactId>
+            <version>2.0.0.M3</version>
+        </dependency>
 
         <dependency>
             <groupId>commons-fileupload</groupId>
@@ -325,4 +343,15 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/libs-milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>
