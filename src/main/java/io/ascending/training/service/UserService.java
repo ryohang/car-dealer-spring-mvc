@@ -58,9 +58,9 @@ public class UserService extends CrudService<User,Long> {
     }
 
     @Transactional(readOnly = true)
-    public User findByEmailOrUsername(String keyword) throws NotFoundException, NullPointerException {
+    public User findByEmailOrUsername(String keyword) throws NotFoundException,NullPointerException {
         if (keyword == null || "".equals(keyword.trim())) {
-            throw new NullPointerException();
+            throw new NullPointerException("search keyword is null");
         }
         User user = userRepository.findByEmailIgnoreCase(keyword);
         if (user == null) {
