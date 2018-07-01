@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface AuthorityRepository extends CrudRepository<Authority, Long> {
     @Query("select a from Authority a LEFT JOIN a.user Users where user_id = ?1")
-    List<Authority> findAuthoritiesByUserId (Long user_id);
+    List<Authority> findAuthoritiesByUserId (Long userId);
 }

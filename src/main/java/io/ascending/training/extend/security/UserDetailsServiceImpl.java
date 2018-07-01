@@ -1,5 +1,6 @@
 package io.ascending.training.extend.security;
 
+import io.ascending.training.domain.Authority;
 import io.ascending.training.domain.User;
 import io.ascending.training.domain.Utils;
 import io.ascending.training.service.UserService;
@@ -9,11 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -42,7 +46,9 @@ public class UserDetailsServiceImpl implements UserDetailsService, MessageSource
             if (domainUser == null) {
                 throw new BadCredentialsException(messageSource.getMessage("AbstractUserDetailsAuthenticationProvider.UsernameNotFound", new Object[] {emailorUsername , "User {0} has no GrantedAuthority"}, Locale.US));
             }
-            domainUser.setAuthorities(Utils.getAuthorities(userService.findAuthorities(domainUser)));
+            List<Authority> userAuthorities = userService.findAuthorities(domainUser);
+            Collection<GrantedAuthority> authorities = Utils.getAuthorities(userAuthorities);
+            domainUser.setAuthorities(authorities);
             return  domainUser;
     }
 

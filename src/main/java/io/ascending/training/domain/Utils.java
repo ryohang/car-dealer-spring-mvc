@@ -14,9 +14,10 @@ import java.util.List;
 public class Utils {
 
     public static Collection<GrantedAuthority> getAuthorities(List<Authority> authorities) {
-        List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
+        List<GrantedAuthority> authList = new ArrayList<>();
         for (Authority auth : authorities){
-            authList.add(new SimpleGrantedAuthority(auth.getAuthority().toUpperCase()));
+            String ROLE = auth.getAuthority().toUpperCase();
+            authList.add(new SimpleGrantedAuthority(ROLE));
         }
         return authList;
     }
