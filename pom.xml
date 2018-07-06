@@ -395,9 +395,9 @@
                         <version>${flyway.version}</version>
                         <configuration>
                             <driver>org.postgresql.Driver</driver>
-                            <url>jdbc:postgresql://localhost:5432/car_unit</url>
-                            <user>admin</user>
-                            <password>password123</password>
+                            <url>jdbc:postgresql://${db_url}</url>
+                            <user>${db_username}</user>
+                            <password>${db_password}</password>
                             <locations>
                                 <location>db/migration</location>
                             </locations>
