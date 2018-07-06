@@ -2,14 +2,12 @@ package io.ascending.training.config;
 
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import io.ascending.training.service.StorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -27,9 +25,6 @@ public class AppConfig {
     @Autowired
     private Environment environment;
     private final Logger logger = LoggerFactory.getLogger(getClass());
-
-//    @Value("#{ applicationProperties['amazon.s3.bucket'] }")
-//    protected String s3Bucket;
 
     @Bean(name = "applicationProperties")
     public PropertiesFactoryBean getDbProperties() {
