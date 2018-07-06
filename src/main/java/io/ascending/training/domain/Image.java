@@ -1,7 +1,10 @@
 package io.ascending.training.domain;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.UUID;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -21,6 +24,10 @@ public class Image implements Serializable {
 
     @Column(name = "url")
     private String url;
+    @Column
+    private String extension;
+    @Column
+    public String uuid = UUID.randomUUID().toString();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id")
@@ -50,4 +57,17 @@ public class Image implements Serializable {
     public void setCar(Car car) {
         this.car = car;
     }
+
+    public void setExtension(String extension) {
+        this.extension = extension;
+    }
+
+    public String getExtension() {
+        return extension;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
 }
