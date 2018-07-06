@@ -33,7 +33,8 @@ public class ImageService extends CrudService<Image,Long> {
     public Image saveFakeImage(MultipartFile multipartFile, boolean isPublic) throws ServiceException {
         if (multipartFile == null || multipartFile.isEmpty()) throw new ServiceException("File must not be null!");
         String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
-        File localFile = new File(System.getProperty("catalina.base") + multipartFile.getOriginalFilename());
+        String homeDir = System.getProperty("catalina.base") !=null ? System.getProperty("catalina.base") : "/tmp/";
+        File localFile = new File(homeDir + multipartFile.getOriginalFilename());
         try {
             multipartFile.transferTo(localFile);
             Image image = new Image();
