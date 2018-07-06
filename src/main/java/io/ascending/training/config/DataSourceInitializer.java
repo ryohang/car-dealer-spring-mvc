@@ -34,16 +34,16 @@ public class DataSourceInitializer {
     @Autowired
     private Environment environment;
 
-    @Value("#{ databaseProperties['database.serverName'] }")
+    @Value("#{ applicationProperties['database.serverName'] }")
     protected String databaseUrl;
 
-    @Value("#{ databaseProperties['database.username'] }")
+    @Value("#{ applicationProperties['database.username'] }")
     protected String databaseUserName = "";
 
-    @Value("#{ databaseProperties['database.password'] }")
+    @Value("#{ applicationProperties['database.password'] }")
     protected String databasePassword = "";
 
-    @Value("#{ databaseProperties['database.dataSourceClassName'] }")
+    @Value("#{ applicationProperties['database.dataSourceClassName'] }")
     protected String driverClassName;
 
 //    @Value("#{ environment['jdbc.validation.query'] }")

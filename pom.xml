@@ -16,6 +16,7 @@
         <flyway.version>5.1.1</flyway.version>
         <jackson.version>2.9.5</jackson.version>
         <swagger.version>2.9.0</swagger.version>
+        <aws.sdk.version>1.11.360</aws.sdk.version>
     </properties>
 
     <dependencies>
@@ -261,6 +262,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!--aws sdk-->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk</artifactId>
+            <version>${aws.sdk.version}</version>
+        </dependency>
+
         <!--Utilities-->
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -386,7 +394,7 @@
             </build>
         </profile>
     </profiles>
-    
+
     <repositories>
         <repository>
             <id>spring-milestones</id>
