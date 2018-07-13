@@ -59,12 +59,11 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<?> login(@RequestBody RestAuthenticationRequest authenticationRequest, Device device) {
         try {
-            final Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            authenticationRequest.getUsername(),
-                            authenticationRequest.getPassword()
-                    )
+            Authentication notFullyAuthenticated = new UsernamePasswordAuthenticationToken(
+                    authenticationRequest.getUsername(),
+                    authenticationRequest.getPassword()
             );
+            final Authentication authentication = authenticationManager.authenticate(notFullyAuthenticated);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             try {
                 final UserDetails userDetails = userService.findByEmailOrUsername(authenticationRequest.getUsername());
@@ -76,6 +75,7 @@ public class UserController {
                 return ResponseEntity.notFound().build();
             }
         }catch (AuthenticationException ex){
+//            return new ResponseEntity<>("authentication failure, please check your username and password",HttpStatus.UNAUTHORIZED);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("authentication failure, please check your username and password");
         }
     }
