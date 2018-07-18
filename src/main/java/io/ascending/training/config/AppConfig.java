@@ -25,6 +25,7 @@ public class AppConfig {
     @Autowired
     private Environment environment;
     private final Logger logger = LoggerFactory.getLogger(getClass());
+    private String propertyKey= "amazon.s3.bucket";
 
     @Bean(name = "applicationProperties")
     public PropertiesFactoryBean getDbProperties() {
@@ -46,7 +47,7 @@ public class AppConfig {
     public StorageService getStorageService(@Autowired @Qualifier("applicationProperties") PropertiesFactoryBean beanFactory) throws IOException {
         AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withCredentials(new DefaultAWSCredentialsProviderChain()).build();
         StorageService storageService = new StorageService(s3Client);
-        storageService.setBucket(beanFactory.getObject().getProperty("amazon.s3.bucket"));
+        storageService.setBucket(beanFactory.getObject().getProperty(propertyKey));
         return storageService;
     }
 }

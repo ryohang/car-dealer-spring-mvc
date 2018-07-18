@@ -1,8 +1,10 @@
 package io.ascending.training.api.v1;
 
 import io.ascending.training.domain.Image;
+import io.ascending.training.domain.User;
 import io.ascending.training.extend.exp.ServiceException;
 import io.ascending.training.service.ImageService;
+import io.ascending.training.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class MiscController {
 
     @Autowired
     private ImageService imageService;
+    @Autowired
+    private UserService userService;
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
     
@@ -38,4 +42,11 @@ public class MiscController {
         }
         return result;
     }
+
+//    @ResponseBody
+//    @RequestMapping(value = "/email", method = RequestMethod.POST)
+//    public Map<String, String> sendEmail(@RequestParam(value = "user_id") Long userId) {
+//        User newUser = userService.findById(userId).get();
+//        emailService.sendInviteEmailToNewUser(newUser);
+//    }
 }
