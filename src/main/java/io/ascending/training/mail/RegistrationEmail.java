@@ -10,16 +10,6 @@ import java.util.Map;
 
 public class RegistrationEmail extends AbstractFreemarkerEmail {
 
-   private String freemarkerTemplateCorporate;
-
-   public String getFreemarkerTemplateCorporate() {
-      return freemarkerTemplateCorporate;
-   }
-
-   public void setFreemarkerTemplateCorporate(String freemarkerTemplateCorporate) {
-      this.freemarkerTemplateCorporate = freemarkerTemplateCorporate;
-   }
-
    @Override
    protected String getMailSubject() {
       return "Important: verify your email";

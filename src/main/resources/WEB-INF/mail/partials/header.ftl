@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>伐木类%3AAT%26T团购手机套餐</title>
+    <title>ASCENDING Training Header</title>
 </head>
 <body style="margin: 0; padding: 0;font-family:Tahoma,Helvetica,Arial,'Microsoft Yahei',STXihei,sans-serif;">
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -27,15 +27,6 @@
                                                 <a href="${url}">
                                                     <img src="${url}/resources/img/mail/logo-header-black.png" alt="Company Logo" width="180"/>
                                                 </a>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table align="right" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
-                                        <tr>
-                                            <td style="text-align:center;vertical-align:middle;background-color:#ff7473;color:#fff;" width="170" height="34">
-                                                <a style="color:#fff;text-decoration:none;" href="${url}/main.html#referral">推荐亲友得话费！</a>
                                             </td>
                                         </tr>
                                     </table>

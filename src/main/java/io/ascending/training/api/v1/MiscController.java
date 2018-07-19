@@ -3,11 +3,13 @@ package io.ascending.training.api.v1;
 import io.ascending.training.domain.Image;
 import io.ascending.training.domain.User;
 import io.ascending.training.extend.exp.ServiceException;
+import io.ascending.training.service.EmailService;
 import io.ascending.training.service.ImageService;
 import io.ascending.training.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +27,8 @@ public class MiscController {
     private ImageService imageService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private EmailService emailService;
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
     
@@ -43,10 +47,10 @@ public class MiscController {
         return result;
     }
 
-//    @ResponseBody
-//    @RequestMapping(value = "/email", method = RequestMethod.POST)
-//    public Map<String, String> sendEmail(@RequestParam(value = "user_id") Long userId) {
-//        User newUser = userService.findById(userId).get();
-//        emailService.sendInviteEmailToNewUser(newUser);
-//    }
+    @RequestMapping(value = "/email", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void sendEmail(@RequestParam(value = "user_id") Long userId) {
+        User newUser = userService.findById(userId).get();
+        emailService.sendInviteEmailToNewUser(newUser);
+    }
 }

@@ -1,6 +1,8 @@
 package io.ascending.training.config;
 
 
+import io.ascending.training.mail.RegistrationEmail;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -14,7 +16,7 @@ import java.util.Properties;
 public class EmailConfig {
     @Profile({"dev","test","prod"})
     @Bean(name="mailSender")
-    public JavaMailSender getEmailSender(){
+    public JavaMailSenderImpl getEmailSender(){
         JavaMailSenderImpl emailSender = new JavaMailSenderImpl();
         emailSender.setHost("smtp.sendgrid.net");
         emailSender.setPort(465);
@@ -33,10 +35,17 @@ public class EmailConfig {
     public FreeMarkerConfigurationFactoryBean getFreeMarkerMailConfiguration(){
         FreeMarkerConfigurationFactoryBean freeMarkerConfigurationFactoryBean = new FreeMarkerConfigurationFactoryBean();
         freeMarkerConfigurationFactoryBean.setTemplateLoaderPath("classpath:/WEB-INF/mail/");
+        freeMarkerConfigurationFactoryBean.setPreferFileSystemAccess(false);
         return freeMarkerConfigurationFactoryBean;
     }
 
-//    @Bean(name="registrationEmail")
-//    public
+    @Bean(name="registrationEmail")
+    public RegistrationEmail getRegistrationEmail(@Autowired JavaMailSenderImpl sender, @Autowired freemarker.template.Configuration configuration){
+        RegistrationEmail emailTemplate = new RegistrationEmail();
+        emailTemplate.setMailSender(sender);
+        emailTemplate.setConfiguration(configuration);
+        emailTemplate.setFreemarkerTemplate("RegistrationEmail.ftl");
+        return emailTemplate;
+    }
 
 }

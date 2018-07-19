@@ -41,7 +41,7 @@ public abstract class AbstractFreemarkerEmail {
    @Qualifier("applicationProperties")
    private Properties applicationProperties;
 
-   @Value("#{applicationProperties['support.email']}")
+   @Value("#{applicationProperties['app.support.email']}")
    public String SUPPORT_EMAIL;
 
    private Configuration configuration;
@@ -94,6 +94,7 @@ public abstract class AbstractFreemarkerEmail {
             root = new HashMap<>();
          }
          root.put("support", SUPPORT_EMAIL);
+         root.put("user", user);
          putValue(emailAction, root);
          MimeMessageHelper helper = new MimeMessageHelper(msg, true);
          helper.setFrom(SUPPORT_EMAIL);
