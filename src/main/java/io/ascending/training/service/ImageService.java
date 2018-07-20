@@ -34,11 +34,11 @@ public class ImageService extends CrudService<Image,Long> {
         if (multipartFile == null || multipartFile.isEmpty()) throw new ServiceException("File must not be null!");
         String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
         String homeDir = System.getProperty("catalina.base") !=null ? System.getProperty("catalina.base") : "/tmp/";
-        File localFile = new File(homeDir + multipartFile.getOriginalFilename());
+        Image image = new Image();
+        String s3Key = FilenameUtils.getBaseName(multipartFile.getOriginalFilename()) + "_"+image.getUuid()+"."+extension;
+        File localFile = new File(homeDir + s3Key);
         try {
             multipartFile.transferTo(localFile);
-            Image image = new Image();
-            String s3Key = image.getUuid()+"."+extension;
             storageService.putObject(s3Key,localFile);
             S3Object s3Object = storageService.getObject(s3Key);
             image.setUrl(storageService.getObjectUrl(s3Object.getKey()));
