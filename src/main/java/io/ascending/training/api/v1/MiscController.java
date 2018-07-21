@@ -2,10 +2,12 @@ package io.ascending.training.api.v1;
 
 import io.ascending.training.domain.Image;
 import io.ascending.training.domain.User;
+import io.ascending.training.enumdef.WorkerMessageType;
 import io.ascending.training.extend.exp.ServiceException;
 import io.ascending.training.service.EmailService;
 import io.ascending.training.service.ImageService;
 import io.ascending.training.service.UserService;
+import io.ascending.training.service.jms.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ public class MiscController {
     private UserService userService;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private MessageService messageService;
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
     
@@ -50,7 +54,8 @@ public class MiscController {
     @RequestMapping(value = "/email", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void sendEmail(@RequestParam(value = "user_id") Long userId) {
-        User newUser = userService.findById(userId).get();
-        emailService.sendInviteEmailToNewUser(newUser);
+        messageService.sendMessage(WorkerMessageType.UserSignUpMsg, String.valueOf(userId), 50000);
+//        User newUser = userService.findById(userId).get();
+//        emailService.sendInviteEmailToNewUser(newUser);
     }
 }
