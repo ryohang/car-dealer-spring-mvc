@@ -1,5 +1,7 @@
 package io.ascending.training.domain;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,9 +23,11 @@ public class Car implements Serializable {
     @Column(name = "brand")
     private String brand;
     @Column(name = "model")
+    @JsonView({JsView.User.class})
     private String model;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "car",cascade = CascadeType.ALL)
+    @JsonView({JsView.Admin.class})
     private List<Image> images;
 
     public Car(){}

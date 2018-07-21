@@ -1,6 +1,7 @@
 package io.ascending.training.api.v1;
 
 import io.ascending.training.domain.Car;
+import io.ascending.training.domain.JsView;
 import io.ascending.training.service.CarService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/cars",produces = MediaType.APPLICATION_JSON_VALUE)
-public class CarController {
+public class CarController extends BaseController{
     private final Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private CarService carService;
@@ -26,6 +27,8 @@ public class CarController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Car> getCarList() {
+        setJsonViewClass(JsView.User.class);
+        disableMapperFeature_DEFAULT_VIEW_INCLUSION();
         Iterable<Car> iterable = carService.findAll();
         List<Car> list = new ArrayList<>();
         for (Car car : iterable) {

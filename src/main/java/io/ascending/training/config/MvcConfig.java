@@ -1,11 +1,14 @@
 package io.ascending.training.config;
 
 import io.ascending.training.config.viewresolver.JsonViewResolver;
+import io.ascending.training.extend.jackson.JsonViewHttpMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.ResourceHttpMessageConverter;
 import org.springframework.mobile.device.DeviceHandlerMethodArgumentResolver;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -72,6 +75,14 @@ public class MvcConfig  implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(deviceHandlerMethodArgumentResolver());
+    }
+
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters){
+        JsonViewHttpMessageConverter jsonViewHttpMessageConverter = new JsonViewHttpMessageConverter();
+        ResourceHttpMessageConverter resourceHttpMessageConverter = new ResourceHttpMessageConverter();
+        converters.add(jsonViewHttpMessageConverter);
+        converters.add(resourceHttpMessageConverter);
     }
 
 
