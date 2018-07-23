@@ -374,6 +374,28 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java-version}</source>
+                    <target>${java-version}</target>
+                    <compilerArgument>-Xlint:all</compilerArgument>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <includes>
+                        <include>**/*Tests.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <profiles>
         <profile>
             <id>dev</id>
@@ -392,24 +414,6 @@
                             <locations>
                                 <location>db/migration</location>
                             </locations>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <configuration>
-                            <source>${java-version}</source>
-                            <target>${java-version}</target>
-                            <compilerArgument>-Xlint:all</compilerArgument>
-                            <showWarnings>true</showWarnings>
-                            <showDeprecation>true</showDeprecation>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <includes>
-                                <include>**/*Tests.java</include>
-                            </includes>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -432,24 +436,6 @@
                             <locations>
                                 <location>db/migration</location>
                             </locations>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <configuration>
-                            <source>${java-version}</source>
-                            <target>${java-version}</target>
-                            <compilerArgument>-Xlint:all</compilerArgument>
-                            <showWarnings>true</showWarnings>
-                            <showDeprecation>true</showDeprecation>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <includes>
-                                <include>**/*Tests.java</include>
-                            </includes>
                         </configuration>
                     </plugin>
                 </plugins>
