@@ -14,6 +14,7 @@ public class ProcessService {
     public void processMessage(Map<String,Object> msg){
         String msgType = (String)msg.get("msgType");
         String msgText = (String)msg.get("msgText");
+        Long userID = Long.valueOf(msgText);
         logger.info("receive msgType: "+msgType);
         logger.info("receive msgText: "+msgText);
     }
