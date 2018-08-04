@@ -1,6 +1,7 @@
 *.DS_Store
 bin
 target
+*.war
 .classpath
 .project
 .settings
