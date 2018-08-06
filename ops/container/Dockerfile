@@ -1,4 +1,4 @@
-FROM tomcat:8.0.36-jre8
+FROM tomcat:9.0.10-jre8
 
 MAINTAINER Ryo Hang
 ARG APP_ENV=test
