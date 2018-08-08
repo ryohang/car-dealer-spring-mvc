@@ -14,6 +14,11 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Entity
 @Table(name="images")
 public class Image implements Serializable {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy=SEQUENCE, generator="images_id_seq")
     @SequenceGenerator(name="images_id_seq", sequenceName="images_id_seq", allocationSize=1)

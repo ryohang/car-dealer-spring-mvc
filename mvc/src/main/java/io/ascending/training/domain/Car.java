@@ -15,6 +15,11 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Entity
 @Table(name="cars")
 public class Car implements Serializable {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy=SEQUENCE, generator="cars_id_seq")
     @SequenceGenerator(name="cars_id_seq", sequenceName="cars_id_seq", allocationSize=1)
