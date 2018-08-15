@@ -5,6 +5,7 @@ import com.tobedevoured.modelcitizen.annotation.Default;
 import com.tobedevoured.modelcitizen.callback.FieldCallback;
 import io.ascending.training.domain.User;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.Random;
 
@@ -32,14 +33,14 @@ public class UserBlueprint {
     };
 
     @Default
-    private Date createAt = new Date();
+    private Instant createdAt = Instant.now();
 
     @Default
     private Integer confirmStatus = 1;
 
     @Default
-    private Date lastLoginAt = new Date();
+    private Instant lastLoginAt = Instant.now();
 
     @Default
-    private Date confirmAt = new Date();
+    private Instant confirmAt = Instant.now();
 }
