@@ -57,6 +57,7 @@ public class SecurityConfig {
                     .addFilterAt(jwtAuthenticationFilter,UsernamePasswordAuthenticationFilter.class)
                     .csrf().disable().authorizeRequests().antMatchers("/api/users/login","/api/users/signup").permitAll()
                 .and()
+                    //enable curl
                     //.authorizeRequests().antMatchers("/api/**").authenticated()
                     .authorizeRequests().antMatchers("/api/**").hasAnyRole("REGISTERED_USER","ADMIN")
                 .and()
