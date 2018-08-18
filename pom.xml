@@ -355,7 +355,7 @@
                         <version>${flyway.version}</version>
                         <configuration>
                             <driver>org.postgresql.Driver</driver>
-                            <url>jdbc:postgresql://localhost:5432/car</url>
+                            <url>jdbc:postgresql://localhost:5432/car_dev</url>
                             <user>admin</user>
                             <password>password123</password>
                             <locations>
