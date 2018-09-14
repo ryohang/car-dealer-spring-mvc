@@ -44,5 +44,8 @@ public class StorageServiceTest extends ServiceTest {
         String key = "testKey";
         storageService.getObject(key);
         verify(client, times(1)).getObject(s3Bucket, key);
+        String key2=null;
+        storageService.getObject(key2);
+        verify(client, times(1)).getObject(s3Bucket, key);
     }
 }
