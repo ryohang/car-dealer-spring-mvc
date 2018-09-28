@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -24,5 +25,10 @@ public class CarService extends CrudService<Car,Long> {
     @Transactional(readOnly = true)
     public Optional<Car> findBy(Car c){
         return carRepository.findByIdWithImages(c.getId());
+    }
+
+    @Transactional(readOnly = true)
+    public List<Car> findAllWithImages(){
+        return carRepository.findAllWithImages();
     }
 }

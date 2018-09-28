@@ -34,6 +34,7 @@ public class CarController extends BaseController{
         for (Car car : iterable) {
             list.add(car);
         }
+//        List<Car> list = carService.findAllWithImages();
         return list;
     }
 
