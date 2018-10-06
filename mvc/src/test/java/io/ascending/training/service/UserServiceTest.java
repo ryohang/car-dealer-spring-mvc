@@ -16,11 +16,12 @@ public class UserServiceTest extends ServiceTest{
     @Test
     @Transactional
     public void findByEmailTest() throws CreateModelException, NotFoundException {
-        User user = modelFactory.createModel(User.class);
-        user.setPassword("password123");
-        user.setConfirmPassword("password123");
-        userService.save(user);
-        User expected = userService.findByEmailOrUsername(user.getEmail());
-        assertEquals(user.getId(),expected.getId());
+        User expectedResult = modelFactory.createModel(User.class);
+        expectedResult.setEmail("test@gmail.com");
+        expectedResult.setPassword("password123");
+        expectedResult.setConfirmPassword("password123");
+        userService.save(expectedResult);
+        User actualResult = userService.findByEmailOrUsername(expectedResult.getEmail());
+        assertEquals(expectedResult.getId(),actualResult.getId());
     }
 }
