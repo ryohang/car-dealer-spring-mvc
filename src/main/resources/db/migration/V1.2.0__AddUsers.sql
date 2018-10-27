@@ -9,6 +9,7 @@ create table Users (
     password varchar(255) not NULL,
     confirm_password varchar(255) not NULL,
     confirm_token varchar(255),
+    account_non_expired boolean default true,
 
     create_at TIMESTAMP NOT NULL,
     update_at TIMESTAMP DEFAULT NULL,
