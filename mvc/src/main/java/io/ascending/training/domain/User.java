@@ -2,6 +2,7 @@ package io.ascending.training.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -46,7 +47,6 @@ public class User implements Serializable,UserDetails {
     private String avatarUrl;
 
     @Column(name = "password")
-    @JsonIgnore
     private String password;
 
     @JsonIgnore
@@ -187,10 +187,12 @@ public class User implements Serializable,UserDetails {
         this.avatarUrl = avatarUrl;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }
