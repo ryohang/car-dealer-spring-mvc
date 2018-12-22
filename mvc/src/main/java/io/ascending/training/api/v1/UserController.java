@@ -53,6 +53,13 @@ public class UserController {
         return userService.findAll();
     }
 
+//    @RequestMapping(method = RequestMethod.PUT)
+//    public User updateUser(User user) {
+////        TODO add user url
+////        logger.debug("list users");
+////        return userService.findAll();
+//    }
+
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)

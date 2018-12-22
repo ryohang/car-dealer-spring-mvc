@@ -3,6 +3,8 @@ package io.ascending.training.config;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.sqs.AmazonSQS;
+import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
 import io.ascending.training.service.StorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,5 +51,11 @@ public class AppConfig {
         StorageService storageService = new StorageService(s3Client);
         storageService.setBucket(beanFactory.getObject().getProperty(propertyKey));
         return storageService;
+    }
+
+    @Bean
+    public AmazonSQS getAmazonSQS() {
+        AmazonSQS client = AmazonSQSClientBuilder.standard().withCredentials(new DefaultAWSCredentialsProviderChain()).build();
+        return client;
     }
 }
