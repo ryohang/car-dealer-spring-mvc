@@ -1,6 +1,7 @@
 package io.ascending.training.config;
 
 import io.ascending.training.config.viewresolver.JsonViewResolver;
+import io.ascending.training.config.viewresolver.XmlViewResolver;
 import io.ascending.training.extend.jackson.JsonViewHttpMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,11 +53,11 @@ public class MvcConfig  implements WebMvcConfigurer {
         ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
         resolver.setContentNegotiationManager(manager);
 
-        List<ViewResolver> resolvers = new ArrayList<ViewResolver>();
-        resolvers.add(jsonViewResolver());
+        List<ViewResolver> viewResolversImpl = new ArrayList<>();
+        viewResolversImpl.add(jsonViewResolver());
 //        resolvers.add(xmlViewResolver());
 
-        resolver.setViewResolvers(resolvers);
+        resolver.setViewResolvers(viewResolversImpl);
         return resolver;
     }
 
@@ -79,9 +81,9 @@ public class MvcConfig  implements WebMvcConfigurer {
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters){
-        JsonViewHttpMessageConverter jsonViewHttpMessageConverter = new JsonViewHttpMessageConverter();
+//        MappingJackson2JsonView jsonViewHttpMessageConverter = new MappingJackson2JsonView();
         ResourceHttpMessageConverter resourceHttpMessageConverter = new ResourceHttpMessageConverter();
-        converters.add(jsonViewHttpMessageConverter);
+//        converters.add(jsonViewHttpMessageConverter);
         converters.add(resourceHttpMessageConverter);
     }
 
@@ -94,6 +96,11 @@ public class MvcConfig  implements WebMvcConfigurer {
     public ViewResolver jsonViewResolver() {
         return new JsonViewResolver();
     }
+
+//    @Bean
+//    public ViewResolver xmlViewResolver() {
+//        return new XmlViewResolver();
+//    }
 
     /*
      * Configure View resolver to provide XML output using JACKSON library to

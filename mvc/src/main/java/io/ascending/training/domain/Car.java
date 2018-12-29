@@ -19,7 +19,10 @@ public class Car implements Serializable {
      *
      */
     private static final long serialVersionUID = 1L;
-    
+
+    public interface WithoutImagesView {};
+    public interface WithImageView extends WithoutImagesView {};
+
     @Id
     @GeneratedValue(strategy=SEQUENCE, generator="cars_id_seq")
     @SequenceGenerator(name="cars_id_seq", sequenceName="cars_id_seq", allocationSize=1)
@@ -28,11 +31,9 @@ public class Car implements Serializable {
     @Column(name = "brand")
     private String brand;
     @Column(name = "model")
-    @JsonView({JsView.User.class})
     private String model;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "car",cascade = CascadeType.ALL)
-    @JsonView({JsView.Admin.class})
     private List<Image> images;
 
     public Car(){}
@@ -66,7 +67,7 @@ public class Car implements Serializable {
     public void setModel(String model) {
         this.model = model;
     }
-
+    @JsonView({WithImageView.class})
     public List<Image> getImages() {
         return images==null ? new ArrayList<>() : images;
     }

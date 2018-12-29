@@ -1,5 +1,6 @@
 package io.ascending.training.api.v1;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import io.ascending.training.domain.Car;
 import io.ascending.training.domain.JsView;
 import io.ascending.training.service.CarService;
@@ -26,9 +27,10 @@ public class CarController extends BaseController{
     }
 
     @RequestMapping(method = RequestMethod.GET)
+    @JsonView(Car.WithoutImagesView.class)
     public List<Car> getCarList() {
-        setJsonViewClass(JsView.User.class);
-        disableMapperFeature_DEFAULT_VIEW_INCLUSION();
+//        setJsonViewClass(JsView.User.class);
+//        disableMapperFeature_DEFAULT_VIEW_INCLUSION();
         Iterable<Car> iterable = carService.findAll();
         List<Car> list = new ArrayList<>();
         for (Car car : iterable) {
@@ -39,6 +41,7 @@ public class CarController extends BaseController{
     }
 
     @RequestMapping(value="/{Id}" , method= RequestMethod.GET)
+    @JsonView(Car.WithImageView.class)
     public Car getCarById(@PathVariable("Id") Long carId) {
         return carService.findBy(new Car(carId)).get();
     }
