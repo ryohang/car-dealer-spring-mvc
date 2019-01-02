@@ -43,6 +43,7 @@ public class CarController extends BaseController{
     @RequestMapping(value="/{Id}" , method= RequestMethod.GET)
     @JsonView(Car.WithImageView.class)
     public Car getCarById(@PathVariable("Id") Long carId) {
+        logger.debug("id is: "+carId);
         return carService.findBy(new Car(carId)).get();
     }
 
