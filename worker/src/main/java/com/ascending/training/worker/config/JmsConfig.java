@@ -53,6 +53,12 @@ public class JmsConfig {
             return jmsListenerContainerFactory;
     }
 
+//    @Bean
+//    public AmazonSQS getAmazonSQS() {
+//        AmazonSQS client = AmazonSQSClientBuilder.standard().withCredentials(new DefaultAWSCredentialsProviderChain()).build();
+//        return client;
+//    }
+
 
 
 }
