@@ -62,7 +62,6 @@ public class UserController {
 ////        return userService.findAll();
 //    }
 
-
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -78,6 +77,7 @@ public class UserController {
                 final UserDetails userDetails = userService.findByEmailOrUsername(authenticationRequest.getUsername());
 //                userService.timeStampLogin((User) userDetails);
                 final String token = jwtTokenUtil.generateToken(userDetails, device);
+//                ResponseEntity rt = new  ResponseEntity(new JwtAuthenticationResponse(token),HttpStatus.OK);
                 return ResponseEntity.ok(new JwtAuthenticationResponse(token));
             } catch (NotFoundException e) {
                 logger.error("System can't find user by email or username",e);
