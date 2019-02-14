@@ -10,3 +10,4 @@ src/main/webapp/META-INF
 *.iml
 rebel.xml
 ./cookie.txt
+META-INF/env/application-*.properties
