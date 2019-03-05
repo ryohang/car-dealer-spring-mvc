@@ -62,8 +62,8 @@ public class MvcConfig  implements WebMvcConfigurer {
      * Configure View resolver to provide JSON output using JACKSON library to
      * convert object in JSON format.
      */
-    @Bean
-    public ViewResolver jsonViewResolver() {
+//    @Bean
+    private ViewResolver jsonViewResolver() {
         return new JsonViewResolver();
     }
 
