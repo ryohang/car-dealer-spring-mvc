@@ -11,6 +11,7 @@ import io.ascending.training.service.jms.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,7 @@ public class MessageController {
     private MessageSQSService messageService;
 
     @RequestMapping(value="/{Id}" , method= RequestMethod.POST)
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public Boolean postFakeMessage(@PathVariable("Id") Long messageId, @RequestParam("domainName")String domainName) {
         logger.debug("receive a message id: "+messageId);
         ObjectMapper mapper = new ObjectMapper();
