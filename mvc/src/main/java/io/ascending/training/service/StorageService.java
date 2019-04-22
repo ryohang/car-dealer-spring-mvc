@@ -36,7 +36,7 @@ public class StorageService {
     }
 
     public void putObject(String S3key, File file) {
-        s3.putObject(bucket, S3key, file);
+        putObject(bucket, S3key, file);
     }
 
     public void putObject(String bucket, String S3key, File file) {
@@ -47,7 +47,7 @@ public class StorageService {
         if(S3key==null){
             return null;
         }else{
-            return s3.getObject(bucket, S3key);
+            return getObject(bucket, S3key);
         }
     }
 

@@ -34,17 +34,17 @@ public class DataSourceInitializer {
     @Autowired
     private Environment environment;
 
-    @Value("#{ applicationProperties['database.serverName'] }")
-    protected String databaseUrl;
+    @Value("${database.serverName}")
+    protected String databaseUrl="";
 
-    @Value("#{ applicationProperties['database.username'] }")
-    protected String databaseUserName = "";
+    @Value("${database.username}")
+    protected String databaseUserName="";
 
-    @Value("#{ applicationProperties['database.password'] }")
-    protected String databasePassword = "";
+    @Value("${database.password}")
+    protected String databasePassword="";
 
-    @Value("#{ applicationProperties['database.dataSourceClassName'] }")
-    protected String driverClassName;
+    @Value("#{ shareProperties['database.dataSourceClassName'] }")
+    protected String driverClassName="";
 
 //    @Value("#{ environment['jdbc.validation.query'] }")
 //    protected String databaseValidationQuery;
@@ -73,6 +73,7 @@ public class DataSourceInitializer {
 
     private BasicDataSource createDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
+        logger.debug("createDataSource() --- driverClassName: "+driverClassName);
         dataSource.setDriverClassName(driverClassName);
         dataSource.setUrl(databaseUrl);
         dataSource.setUsername(databaseUserName);
