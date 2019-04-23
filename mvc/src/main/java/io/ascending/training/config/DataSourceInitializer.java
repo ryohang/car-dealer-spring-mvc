@@ -35,16 +35,16 @@ public class DataSourceInitializer {
     private Environment environment;
 
     @Value("${database.serverName}")
-    protected String databaseUrl="";
+    private String databaseUrl;
 
     @Value("${database.username}")
-    protected String databaseUserName="";
+    private String databaseUserName;
 
     @Value("${database.password}")
-    protected String databasePassword="";
+    private String databasePassword;
 
     @Value("#{ shareProperties['database.dataSourceClassName'] }")
-    protected String driverClassName="";
+    private String driverClassName;
 
 //    @Value("#{ environment['jdbc.validation.query'] }")
 //    protected String databaseValidationQuery;
