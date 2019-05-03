@@ -30,7 +30,7 @@ public class ImageService extends CrudService<Image,Long> {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Transactional
-    public Image saveFakeImage(MultipartFile multipartFile, boolean isPublic) throws ServiceException {
+    public Image saveFakeImage(MultipartFile multipartFile) throws ServiceException {
         if (multipartFile == null || multipartFile.isEmpty()) throw new ServiceException("File must not be null!");
         String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
         String homeDir = System.getProperty("catalina.base") !=null ? System.getProperty("catalina.base") : "/tmp/";

@@ -38,11 +38,10 @@ public class MiscController {
     
     @ResponseBody
     @RequestMapping(value = "/picture", method = RequestMethod.POST, consumes = {"multipart/form-data"})
-    public Map<String, String> uploadPicture(@RequestParam(value = "pic") MultipartFile picture,
-            @RequestParam(value = "public", required = false, defaultValue = "true") Boolean isPublic) {
+    public Map<String, String> uploadPicture(@RequestParam(value = "pic") MultipartFile picture) {
         Map<String, String> result = new HashMap<>(1);
         try {
-            Image image = imageService.saveFakeImage(picture, isPublic);
+            Image image = imageService.saveFakeImage(picture);
             result.put("s3_url", image.getUrl());
             //result.put("s3_uuid", s3Image.getUuid());
         } catch (ServiceException e) {

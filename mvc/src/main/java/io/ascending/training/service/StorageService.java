@@ -56,6 +56,6 @@ public class StorageService {
     }
 
     public String getObjectUrl(String S3key) {
-        return cdnUrl + "/" + bucket + "/" + S3key;
+        return s3.getUrl(bucket,S3key).toString();
     }
 }
