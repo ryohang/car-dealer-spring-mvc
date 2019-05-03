@@ -61,7 +61,7 @@ public class ImageServiceTest {
         when(storageService.getObject(any())).thenReturn(s3Object);
         String testUrl = "testurl";
         when(storageService.getObjectUrl(any())).thenReturn(testUrl);
-        Image image = imageService.saveFakeImage(multipartFile,true);
+        Image image = imageService.saveFakeImage(multipartFile);
         assertNotNull(image.getUrl());
         assertEquals(image.getUrl(),testUrl);
 //        when(multipartFile.transferTo(localFile)).then();
