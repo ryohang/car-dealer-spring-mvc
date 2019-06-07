@@ -14,8 +14,4 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("unit")
 public class ServiceTest extends TestBase {
-    @Autowired
-    protected CarService carService;
-    @Autowired
-    protected ImageService imageService;
 }
