@@ -26,6 +26,9 @@ public class Image implements Serializable {
     @JoinColumn(name = "car_id")
     private Car car;
 
+    public Long getId() {
+        return id;
+    }
 
     public String getTitle() {
         return title;

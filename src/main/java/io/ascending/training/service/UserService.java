@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import io.ascending.training.domain.User;
 import io.ascending.training.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
