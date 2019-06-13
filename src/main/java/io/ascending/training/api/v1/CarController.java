@@ -1,7 +1,7 @@
 package io.ascending.training.api.v1;
 
 import io.ascending.training.domain.Car;
-import io.ascending.training.service.CarService;
+import io.ascending.training.repository.CarDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,23 +10,22 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/cars",produces = MediaType.APPLICATION_JSON_VALUE)
 public class CarController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
-    private CarService carService;
+    private CarDao carDao;
 
     @RequestMapping(method = RequestMethod.POST)
     public Car generateCar(@RequestBody Car car) {
-        return carService.save(car);
+        return carDao.save(car);
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Car> getCarList() {
-        Iterable<Car> iterable = carService.findAll();
+        Iterable<Car> iterable = carDao.findAll();
         List<Car> list = new ArrayList<>();
         for (Car car : iterable) {
             list.add(car);
@@ -36,16 +35,16 @@ public class CarController {
 
     @RequestMapping(value="/{Id}" , method= RequestMethod.GET)
     public Car getCarById(@PathVariable("Id") Long carId) {
-        return carService.findBy(new Car(carId)).get();
+        return carDao.findById(carId);
     }
 
 
-    @RequestMapping(value="/{Id}" , method= RequestMethod.GET,params = {"carName"})
-    public Car getCarById(@PathVariable("Id") Long carId,@RequestParam(value = "carName") String carName,@RequestHeader("Accept-Encoding") String encoding) {
-        logger.debug("parameter name is: "+ carName);
-        logger.debug("encoding header is: "+ encoding);
-        return carService.findBy(new Car(carId)).get();
-    }
+//    @RequestMapping(value="/{Id}" , method= RequestMethod.GET,params = {"carName"})
+//    public Car getCarById(@PathVariable("Id") Long carId,@RequestParam(value = "carName") String carName,@RequestHeader("Accept-Encoding") String encoding) {
+//        logger.debug("parameter name is: "+ carName);
+//        logger.debug("encoding header is: "+ encoding);
+//        return carService.findBy(new Car(carId)).get();
+//    }
 
 
 }

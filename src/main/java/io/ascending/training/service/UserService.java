@@ -1,14 +1,10 @@
 package io.ascending.training.service;
 
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import io.ascending.training.domain.Car;
 import io.ascending.training.domain.User;
 import io.ascending.training.extend.exp.NotFoundException;
-import io.ascending.training.repository.CarRepository;
-import io.ascending.training.repository.UserRepository;
+import io.ascending.training.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,13 +18,9 @@ import java.util.UUID;
  * Created by ryo on 5/20/18.
  */
 @Service
-public class UserService extends CrudService<User,Long> {
+public class UserService {
     @Autowired
-    private UserRepository userRepository;
-    @Override
-    protected CrudRepository<User, Long> getCrudRepository() {
-        return userRepository;
-    }
+    private UserDao userRepository;
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -41,13 +33,12 @@ public class UserService extends CrudService<User,Long> {
         newUser.setConfirmToken(code);
         newUser.setCreatedAt(Instant.now());
         newUser.setLastResetAt(Instant.now());
-        save(newUser);
+        userRepository.save(newUser);
         return newUser;
     }
 
     public List<User> findAll(){
-        List<User> users = Lists.newArrayList(userRepository.findAll());
-        return users;
+        return userRepository.findAll();
     }
 
     @Transactional(readOnly = true)
