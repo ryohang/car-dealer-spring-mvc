@@ -20,7 +20,7 @@ import java.util.UUID;
 @Service
 public class UserService {
     @Autowired
-    private UserDao userRepository;
+    private UserDao userDao;
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -33,12 +33,12 @@ public class UserService {
         newUser.setConfirmToken(code);
         newUser.setCreatedAt(Instant.now());
         newUser.setLastResetAt(Instant.now());
-        userRepository.save(newUser);
+        userDao.save(newUser);
         return newUser;
     }
 
     public List<User> findAll(){
-        return userRepository.findAll();
+        return userDao.findAll();
     }
 
     @Transactional(readOnly = true)
@@ -46,13 +46,29 @@ public class UserService {
         if (keyword == null || "".equals(keyword.trim())) {
             throw new NullPointerException();
         }
-        User user = userRepository.findByEmailIgnoreCase(keyword);
+        User user = userDao.findByEmailIgnoreCase(keyword);
         if (user == null) {
-            user = userRepository.findByUsernameIgnoreCase(keyword);
+            user = userDao.findByUsernameIgnoreCase(keyword);
         }
         if (user == null) {
             throw new NotFoundException();
         }
         return user;
+    }
+
+    @Transactional
+    public User save(User u){
+        return userDao.save(u);
+    }
+
+    @Transactional
+    public User findById(Long Id){
+        return userDao.findById(Id);
+    }
+
+
+    @Transactional
+    public User findByEmailIgnoreCase(String username){
+        return userDao.findByEmailIgnoreCase(username);
     }
 }

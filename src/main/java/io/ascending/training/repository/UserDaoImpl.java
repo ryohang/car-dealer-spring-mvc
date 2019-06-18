@@ -39,6 +39,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    @Transactional
     public User findById(Long id) {
         String hql = "FROM User u where u.id = :userId";
         Session s =sessionFactory.getCurrentSession();

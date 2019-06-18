@@ -3,14 +3,12 @@ package io.ascending.training.api.v1;
 import io.ascending.training.domain.User;
 import io.ascending.training.repository.UserDao;
 import io.ascending.training.repository.UserDaoImpl;
+import io.ascending.training.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,21 +34,33 @@ public class UserController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 //
     @Autowired
-    private UserDao userDao;
-//
-//
+    private UserService userService;
+
     // /api/users GET
     @RequestMapping(value="",method = RequestMethod.GET)
     public List getUserList() {
         logger.debug("list users");
-        return userDao.findAll();
+        return userService.findAll();
     }
 
-    // /api/users/5/paystub/10 GET /object/object_id    /object?id=5
-    @RequestMapping(value="/{user_id}",method = RequestMethod.GET)
-    public User getUserById(@PathVariable("user_id") Long Id) {
+    // /api/users POST
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public User addUser(@RequestBody User u){
+         return userService.save(u);
+    }
+
+    // /api/users/5 GET /object/object_id    /object?id=5
+    @RequestMapping(value="/{id}",method = RequestMethod.GET)
+    public User getUserById(@PathVariable("id") Long Id) {
         logger.debug("find users id: "+Id);
-        return userDao.findById(Id);
+        return userService.findById(Id);
+    }
+
+    // api/user?username=xxxx GET
+    @RequestMapping(value="",method = RequestMethod.GET,params = "username")
+    public User getUserByUsername(@RequestParam("username") String username) {
+        logger.debug("find users by username: "+username);
+        return userService.findByEmailIgnoreCase(username);
     }
 //
 //    @RequestMapping(value = "/login",method = RequestMethod.POST)

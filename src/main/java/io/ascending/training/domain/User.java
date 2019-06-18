@@ -41,10 +41,10 @@ public class User implements Serializable,UserDetails {
     private String avatarUrl;
 
     @Column(name = "password")
-    @JsonIgnore
+//    @JsonIgnore
     private String password;
 
-    @JsonIgnore
+//    @JsonIgnore
     @Column(name = "confirm_password")
     private String confirmPassword;
 
@@ -81,6 +81,7 @@ public class User implements Serializable,UserDetails {
     private String timezone;
 
     @Column(name ="account_non_expired")
+    @JsonIgnore
     private Boolean accountNonExpired;
 
     public Long getId() {
@@ -152,7 +153,7 @@ public class User implements Serializable,UserDetails {
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
     }
-
+//    @JsonIgnore
     public String getPassword() {
         return password;
     }

@@ -2,6 +2,7 @@ package io.ascending.training.api.v1;
 
 import io.ascending.training.domain.Car;
 import io.ascending.training.repository.CarDao;
+import io.ascending.training.service.CarService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,27 +17,24 @@ import java.util.List;
 public class CarController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
-    private CarDao carDao;
+    private CarService carService;
 
     @RequestMapping(method = RequestMethod.POST)
     public Car generateCar(@RequestBody Car car) {
-        return carDao.save(car);
+        return carService.save(car);
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Car> getCarList() {
-        Iterable<Car> iterable = carDao.findAll();
-        List<Car> list = new ArrayList<>();
-        for (Car car : iterable) {
-            list.add(car);
-        }
-        return list;
+        logger.info("list all cars");
+        List<Car> cars = carService.findAll();
+        return cars;
     }
 
-    @RequestMapping(value="/{Id}" , method= RequestMethod.GET)
-    public Car getCarById(@PathVariable("Id") Long carId) {
-        return carDao.findById(carId);
-    }
+//    @RequestMapping(value="/{Id}" , method= RequestMethod.GET)
+//    public Car getCarById(@PathVariable("Id") Long carId) {
+//        return carDao.findById(carId);
+//    }
 
 
 //    @RequestMapping(value="/{Id}" , method= RequestMethod.GET,params = {"carName"})
