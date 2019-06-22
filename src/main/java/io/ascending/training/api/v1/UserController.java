@@ -53,7 +53,6 @@ public class UserController {
         return userService.findAll();
     }
 
-
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
