@@ -6,9 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.mobile.device.DeviceHandlerMethodArgumentResolver;
 import org.springframework.web.accept.ContentNegotiationManager;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
@@ -63,17 +61,6 @@ public class MvcConfig  implements WebMvcConfigurer {
         resolver.setMaxUploadSize(10008439);
         return resolver;
     }
-
-    @Bean
-    public DeviceHandlerMethodArgumentResolver deviceHandlerMethodArgumentResolver() {
-        return new DeviceHandlerMethodArgumentResolver();
-    }
-
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(deviceHandlerMethodArgumentResolver());
-    }
-
 
     /*
      * Configure View resolver to provide JSON output using JACKSON library to

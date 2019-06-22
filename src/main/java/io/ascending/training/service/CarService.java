@@ -1,28 +1,33 @@
 package io.ascending.training.service;
 
 import io.ascending.training.domain.Car;
-import io.ascending.training.repository.CarRepository;
+import io.ascending.training.repository.CarDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.List;
 
-/**
- * Created by ryo on 5/20/18.
- */
 @Service
-public class CarService extends CrudService<Car,Long> {
+public class CarService {
+
     @Autowired
-    private CarRepository carRepository;
-    @Override
-    protected CrudRepository<Car, Long> getCrudRepository() {
-        return carRepository;
+    private CarDao carDao;
+
+    @Transactional
+    public Car save(Car c){
+        return carDao.save(c);
     }
 
-    @Transactional(readOnly = true)
-    public Optional<Car> findBy(Car c){
-        return carRepository.findByIdWithImages(c.getId());
+    @Transactional
+    public List<Car> findAll(){
+        return carDao.findAll();
+    }
+
+    public List<Car> getBestValue(){
+        List<Car> cars = carDao.findAll();
+        //todo getbestvalue filter
+//        cars;
+        return cars;
     }
 }
