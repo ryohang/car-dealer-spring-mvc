@@ -25,13 +25,11 @@ import java.util.Locale;
  * User: hanqinghang
  */
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService, MessageSourceAware {
+public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserService userService;
-    @Autowired
-    protected MessageSource messageSource;
 
-    private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
     @Transactional
@@ -44,16 +42,11 @@ public class UserDetailsServiceImpl implements UserDetailsService, MessageSource
                 logger.debug("catch AuthenticationServiceException from AuthenticationProvider");
             }
             if (domainUser == null) {
-                throw new BadCredentialsException(messageSource.getMessage("AbstractUserDetailsAuthenticationProvider.UsernameNotFound", new Object[] {emailorUsername , "User {0} has no GrantedAuthority"}, Locale.US));
+                throw new BadCredentialsException("AbstractUserDetailsAuthenticationProvider.UsernameNotFound " + emailorUsername +" has no GrantedAuthority");
             }
             List<Authority> userAuthorities = userService.findAuthorities(domainUser);
             Collection<GrantedAuthority> authorities = Utils.getAuthorities(userAuthorities);
             domainUser.setAuthorities(authorities);
             return  domainUser;
-    }
-
-    @Override
-    public void setMessageSource(MessageSource messageSource) {
-        this.messageSource = messageSource;
     }
 }
