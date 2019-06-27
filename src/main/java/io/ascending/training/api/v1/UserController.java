@@ -96,28 +96,20 @@ public class UserController {
 //        logger.debug("request parameters: "+ username);
 //        return username;
 //    }
-//
-//    @RequestMapping(value = "/signup", method = RequestMethod.POST)
-//    @ResponseStatus(HttpStatus.OK)
-//    @ResponseBody
-//    public User processRegistration(@RequestParam("s_username") String username, @RequestParam("s_email") String email,
-//                                    @RequestParam("s_password") String password,
-//                                    @RequestParam(value = "s_firstname", required = false) String firstName,
-//                                    @RequestParam(value = "s_lastname", required = false)  String lastName) {
-//        User newUser = new User();
-//        newUser.setEmail(email);
-//        newUser.setUsername(username);
-//        newUser.setPassword(password);
-//        newUser.setConfirmStatus(UserConfirmStatus.CREATED.ordinal());
-//        if (firstName != null) {
-//            newUser.setFirstName(firstName);
-//        }
-//        if (lastName != null) {
-//            newUser.setLastName(lastName);
-//        }
-//        userService.createUser(newUser);
-//        return newUser;
-//    }
-//
-//
+    //POST /api/user
+    @RequestMapping(value = "",method = RequestMethod.POST)
+    public User addUser(@RequestBody User user) {
+        userService.createUser(user);
+        return user;
+    }
+
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public User processRegistration(@RequestBody User u) {
+        logger.debug("create user for username: "+  u.getUsername());
+        userService.createUser(u);
+        return u;
+    }
+
 }

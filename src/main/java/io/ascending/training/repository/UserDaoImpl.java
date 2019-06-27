@@ -3,6 +3,7 @@ package io.ascending.training.repository;
 import io.ascending.training.domain.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +40,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public User findById(Long id) {
         String hql = "FROM User u where u.id = :userId";
         Session s =sessionFactory.getCurrentSession();
@@ -48,13 +49,22 @@ public class UserDaoImpl implements UserDao {
         return query.getSingleResult();
     }
 
-
+    @Transactional(readOnly = true)
     public User findByEmailIgnoreCase(String email){
-        return null;
+        String hql = "FROM User u where u.email = :email";
+        Session s =sessionFactory.getCurrentSession();
+        Query<User> query=s.createQuery(hql);
+        query.setParameter("email",email);
+        return query.uniqueResult();
     }
 
-    public User findByUsernameIgnoreCase(String email){
-        return null;
+    @Transactional(readOnly = true)
+    public User findByUsernameIgnoreCase(String username){
+        String hql = "FROM User u where u.username = :username";
+        Session s =sessionFactory.getCurrentSession();
+        Query<User> query=s.createQuery(hql);
+        query.setParameter("username",username);
+        return query.uniqueResult();
     }
 //    @Autowired
 //    private SessionFactory sessionFactory;

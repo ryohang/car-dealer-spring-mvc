@@ -93,10 +93,6 @@ public class User implements Serializable,UserDetails {
     @JsonIgnore
     private Collection<? extends GrantedAuthority> authorities;
 
-    @Column(name ="account_non_expired")
-    @JsonIgnore
-    private Boolean accountNonExpired;
-
     public Long getId() {
         return id;
     }
@@ -106,21 +102,25 @@ public class User implements Serializable,UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return !expired;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return !locked;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return enabled;
     }

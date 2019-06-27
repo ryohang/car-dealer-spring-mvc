@@ -24,19 +24,21 @@ public class UserService {
     private UserDao userDao;
     @Autowired
     private AuthorityDao authorityDao;
-    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
 
     @Transactional
     public User createUser(User newUser) {
         String code = UUID.randomUUID().toString();
-        String encodedPass = encoder.encode(newUser.getPassword());
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String originalPassword =newUser.getPassword();
+        String encodedPass = encoder.encode(originalPassword);
         newUser.setPassword(encodedPass);
         newUser.setConfirmPassword(encodedPass);
         newUser.setConfirmToken(code);
         newUser.setCreatedAt(Instant.now());
         newUser.setLastResetAt(Instant.now());
-        addAuthority(newUser,AuthorityRole.ROLE_REGISTERED_USER);
         userDao.save(newUser);
+        addAuthority(newUser,AuthorityRole.ROLE_REGISTERED_USER);
         return newUser;
     }
 
