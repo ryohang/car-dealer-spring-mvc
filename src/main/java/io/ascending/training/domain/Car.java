@@ -2,6 +2,7 @@ package io.ascending.training.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,9 @@ public class Car implements Serializable {
     private String brand;
     @Column(name = "model")
     private String model;
+
+    @Column(name="created_date")
+    private LocalDate createdDate;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "car",cascade = CascadeType.ALL)
     private List<Image> images;
@@ -64,5 +68,13 @@ public class Car implements Serializable {
 
     public void setImages(List<Image> images) {
         this.images = images;
+    }
+
+    public LocalDate getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDate createdDate) {
+        this.createdDate = createdDate;
     }
 }
