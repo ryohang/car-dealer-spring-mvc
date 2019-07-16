@@ -1,0 +1,1 @@
+ALTER TABLE cars ADD COLUMN created_date DATE not null default now();

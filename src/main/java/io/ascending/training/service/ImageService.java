@@ -4,13 +4,11 @@ import com.amazonaws.services.s3.model.S3Object;
 import io.ascending.training.domain.Car;
 import io.ascending.training.domain.Image;
 import io.ascending.training.extend.exp.ServiceException;
-import io.ascending.training.repository.CarRepository;
-import io.ascending.training.repository.ImageRepository;
+import io.ascending.training.repository.ImageDao;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,11 +20,11 @@ import java.io.IOException;
  * Created by ryo on 5/20/18.
  */
 @Service
-public class ImageService extends CrudService<Image,Long> {
+public class ImageService {
     @Autowired
     private StorageService storageService;
     @Autowired
-    private ImageRepository imageRepository;
+    private ImageDao imageRepository;
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Transactional
@@ -50,8 +48,8 @@ public class ImageService extends CrudService<Image,Long> {
         return null;
     }
 
-    @Override
-    protected CrudRepository<Image, Long> getCrudRepository() {
-        return imageRepository;
-    }
+//    @Override
+//    protected CrudRepository<Image, Long> getCrudRepository() {
+//        return imageRepository;
+//    }
 }

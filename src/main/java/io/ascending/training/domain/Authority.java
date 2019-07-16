@@ -3,6 +3,7 @@ package io.ascending.training.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,7 +19,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
 @Table(name="authorities")
-public class Authority implements Serializable {
+public class Authority implements GrantedAuthority,Serializable {
 
     /**
      *
@@ -40,7 +41,6 @@ public class Authority implements Serializable {
     private User user;
 
     public Authority(){}
-
 
     public Authority(User user, String authority){
         this.user=user;

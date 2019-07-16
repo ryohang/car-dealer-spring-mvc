@@ -14,5 +14,5 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @ActiveProfiles("unit")
 public class RepositoryTest {
     @Autowired
-    protected CarRepository carRepository;
+    protected UserDao userRepository;
 }
