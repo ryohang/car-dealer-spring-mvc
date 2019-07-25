@@ -11,3 +11,4 @@ src/main/webapp/META-INF
 rebel.xml
 ./cookie.txt
 META-INF/env/application-*.properties
+*.bak
