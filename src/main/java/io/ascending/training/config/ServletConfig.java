@@ -4,8 +4,10 @@ import io.ascending.training.config.viewresolver.JsonViewResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.web.accept.ContentNegotiationManager;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
@@ -17,15 +19,15 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @ComponentScan("io.ascending.training.api")
-//@Import({SwaggerConfig.class})
+@Import({SwaggerConfig.class})
 public class ServletConfig implements WebMvcConfigurer {
-//    @Override
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
-//        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-//        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-//
-//    }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+
+    }
 //
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
@@ -54,12 +56,12 @@ public class ServletConfig implements WebMvcConfigurer {
     }
 
 //
-//    @Bean(name = "multipartResolver")
-//    public CommonsMultipartResolver getMultipartResolver() {
-//        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-//        resolver.setMaxUploadSize(10008439);
-//        return resolver;
-//    }
+    @Bean(name = "multipartResolver")
+    public CommonsMultipartResolver getMultipartResolver() {
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+        resolver.setMaxUploadSize(10008439);
+        return resolver;
+    }
 //
 //
 //    /*

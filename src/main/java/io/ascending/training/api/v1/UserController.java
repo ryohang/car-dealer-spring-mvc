@@ -40,9 +40,9 @@ public class UserController {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-//    @Autowired
-//    @Qualifier(BeanIds.AUTHENTICATION_MANAGER)
-//    private AuthenticationManager authenticationManager;
+    @Autowired
+    @Qualifier(BeanIds.AUTHENTICATION_MANAGER)
+    private AuthenticationManager authenticationManager;
 
     // /api/users GET
     @RequestMapping(value="",method = RequestMethod.GET)
@@ -51,31 +51,31 @@ public class UserController {
         return userService.findAll();
     }
 
-//    @RequestMapping(value = "/login", method = RequestMethod.POST)
-//    @ResponseStatus(HttpStatus.OK)
-//    @ResponseBody
-//    public ResponseEntity<?> login(@RequestBody RestAuthenticationRequest authenticationRequest, Device device) {
-//        try {
-//            Authentication notFullyAuthenticated = new UsernamePasswordAuthenticationToken(
-//                    authenticationRequest.getUsername(),
-//                    authenticationRequest.getPassword()
-//            );
-//            final Authentication authentication = authenticationManager.authenticate(notFullyAuthenticated);
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
-//            try {
-//                final UserDetails userDetails = userService.findByEmailOrUsername(authenticationRequest.getUsername());
-////                userService.timeStampLogin((User) userDetails);
-//                final String token = jwtTokenUtil.generateToken(userDetails, device);
-//                return ResponseEntity.ok(new JwtAuthenticationResponse(token));
-//            } catch (NotFoundException e) {
-//                logger.error("System can't find user by email or username", e);
-//                return ResponseEntity.notFound().build();
-//            }
-//        } catch (AuthenticationException ex) {
-////            return new ResponseEntity<>("authentication failure, please check your username and password",HttpStatus.UNAUTHORIZED);
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("authentication failure, please check your username and password");
-//        }
-//    }
+    // /api/login POST
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public ResponseEntity<?> login(@RequestBody RestAuthenticationRequest authenticationRequest) {
+        try {
+            Authentication notFullyAuthenticated = new UsernamePasswordAuthenticationToken(
+                    authenticationRequest.getUsername(),
+                    authenticationRequest.getPassword()
+            );
+            final Authentication authentication = authenticationManager.authenticate(notFullyAuthenticated);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            try {
+                final UserDetails userDetails = userService.findByEmailOrUsername(authenticationRequest.getUsername());
+                final String token = jwtTokenUtil.generateToken(userDetails);
+                return ResponseEntity.ok(new JwtAuthenticationResponse(token));
+            } catch (NotFoundException e) {
+                logger.error("System can't find user by email or username", e);
+                return ResponseEntity.notFound().build();
+            }
+        } catch (AuthenticationException ex) {
+//            return new ResponseEntity<>("authentication failure, please check your username and password",HttpStatus.UNAUTHORIZED);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("authentication failure, please check your username and password");
+        }
+    }
 
     // /api/users/5 GET /object/object_id    /object?id=5
     @RequestMapping(value="/{id}",method = RequestMethod.GET)
@@ -90,12 +90,7 @@ public class UserController {
         logger.debug("find users by username: "+username);
         return userService.findByEmailIgnoreCase(username);
     }
-//
-//    @RequestMapping(value = "/login",method = RequestMethod.POST)
-//    public String userLogin(@RequestParam("username") String username) {
-//        logger.debug("request parameters: "+ username);
-//        return username;
-//    }
+
     //POST /api/user
     @RequestMapping(value = "",method = RequestMethod.POST)
     public User addUser(@RequestBody User user) {

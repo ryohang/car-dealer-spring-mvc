@@ -10,3 +10,4 @@ src/main/webapp/META-INF
 #rebel.xml
 ./cookie.txt
 *rebel*.xml
+*.bak
