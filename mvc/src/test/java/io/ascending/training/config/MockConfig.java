@@ -1,5 +1,8 @@
 package io.ascending.training.config;
 
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
+import com.amazonaws.services.sqs.AmazonSQS;
+import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
 import io.ascending.training.service.StorageService;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
@@ -23,5 +26,12 @@ public class MockConfig {
     public JavaMailSenderImpl getEmailSender(){
         JavaMailSenderImpl emailSender = Mockito.mock(JavaMailSenderImpl.class);
         return emailSender;
+    }
+
+    @Bean
+    @Profile({"unit"})
+    public AmazonSQS getAmazonSQS() {
+        AmazonSQS client = Mockito.mock(AmazonSQS.class);
+        return client;
     }
 }
