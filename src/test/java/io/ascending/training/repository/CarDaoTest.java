@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -38,6 +39,7 @@ public class CarDaoTest {
         Car expectedResult = new Car();
         expectedResult.setModel("camery");
         expectedResult.setBrand("toyota");
+        expectedResult.setCreatedDate(LocalDate.now());
         carDao.save(expectedResult);
         Image img = new Image();
         img.setUrl("https://test");

@@ -15,7 +15,7 @@
         <org.slf4j-version>1.7.25</org.slf4j-version>
         <flyway.version>5.1.1</flyway.version>
         <jackson.version>2.9.5</jackson.version>
-        <swagger.version>2.9.0</swagger.version>
+        <swagger.version>2.9.2</swagger.version>
         <aws.sdk.version>1.11.360</aws.sdk.version>
         <mockito.version>2.19.0</mockito.version>
     </properties>
