@@ -16,7 +16,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>5.0.6.RELEASE</spring.version>
-        <fasterxml-jackson.version>2.9.8</fasterxml-jackson.version>
+        <fasterxml-jackson.version>2.11.1</fasterxml-jackson.version>
         <java-version>1.8</java-version>
         <hibernate.version>5.3.1.Final</hibernate.version>
         <org.slf4j-version>1.7.25</org.slf4j-version>
