@@ -29,9 +29,9 @@ you can also add that into maven settings.xml
 ```
 
 #### Unit Test
-
+You need to run the unit test command below in the car-dealder-spring-mvc/mvc folder.
 ```
-mvn compile test -Dspring.profiles.active=unit
+mvn clean compile test -Dspring.profiles.active=unit -Daws.region=us-east-1 -Djms.queue.name=car-demo-unit -Damazon.s3.bucket=car-service-unit -Ddatabase.serverName=jdbc:postgresql://localhost:5432/car_unit -Ddatabase.username=admin -Ddatabase.password=password123
 ```
 
 #### Configuration information (The config file is located in ./src/main/resources/META-INF/)
