@@ -1,4 +1,4 @@
-FROM tomcat:9.0.10-jre8
+FROM tomcat:9.0.78-jre17
 
 MAINTAINER Ryo Hang
 ARG PROFILE=dev
